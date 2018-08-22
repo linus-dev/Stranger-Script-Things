@@ -67,7 +67,7 @@ def GatherLogs():
         if (start.hour > 9):
           continue
         delta = TimeDelta(start, end)
-        print('{}/{}/{} - {} - {} - {}'.format(str(day), str(month), str(year), str(delta), start, end))
+        print('{} - {} | {}'.format(start, end, str(delta)))
   
 if __name__ == '__main__':
   GatherLogs()
