@@ -35,7 +35,7 @@ def GatherLogs():
         if (event.EventID == 4648): # LOGON
           data = event.StringInserts
           if (data):
-            if(USERNAME in data):
+            if(USERNAME.lower() in data or USERNAME.upper() in data):
               current = event.TimeGenerated
               year = current.year
               month = current.month
@@ -43,10 +43,10 @@ def GatherLogs():
               SetupDate(PUNCHCARD, event.TimeGenerated)
               PUNCHCARD[year][month][day]['work_start'] = current
         # Max logoff date
-        if (event.EventID == 4634): # LOGOFF
+        if (event.EventID == 4634 or event.EventID == 4647): # LOGOFF
           data = event.StringInserts
           if (data):
-            if(USERNAME in data):
+            if(USERNAME.lower() in data or USERNAME.upper() in data):
               current = event.TimeGenerated
               year = current.year
               month = current.month
@@ -67,7 +67,7 @@ def GatherLogs():
         if (start.hour > 9):
           continue
         delta = TimeDelta(start, end)
-        print('{}/{}/{} - {}'.format(str(day), str(month), str(year), str(delta)))
+        print('{}/{}/{} - {} - {} - {}'.format(str(day), str(month), str(year), str(delta), start, end))
   
 if __name__ == '__main__':
   GatherLogs()
